@@ -1,0 +1,64 @@
+@import "../../scss/variables";
+
+.Notification {
+  width: 24em;
+  margin-top: 0.6em;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.5);
+  .Content {
+    padding: 0.6em;
+  }
+
+  .ProgressBar {
+    height: 0.3em;
+  }
+
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0.3em;
+    font-weight: normal;
+    border-radius: 0;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    transition: opacity 600ms ease;
+    opacity: 0;
+  }
+
+  &:hover {
+    button {
+      opacity: 1;
+    }
+  }
+
+  &.Default {
+    background-color: $brand-primary;
+
+    .ProgressBar {
+      background-color: darken($brand-primary, 10%);
+    }
+  }
+
+  &.Success {
+    background-color: $brand-success;
+    .Content {
+      color: $gray-lighter;
+    }
+    .ProgressBar {
+      background-color: lighten($brand-success, 10%);
+    }
+
+    button {
+      color: lighten($brand-success, 10%);
+      &:hover {
+        color: lighten($brand-success, 20%);
+      }
+    }
+
+  }
+}

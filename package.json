@@ -1,0 +1,68 @@
+{
+  "name": "redux-notification",
+  "version": "0.1.0",
+  "description": "Simple Redux notifications manager.",
+  "main": "build/redux-notification.js",
+  "module": "build/redux-notification.module.js",
+  "scripts": {
+    "build": "rollup -c rollup.config.babel.js",
+    "watch": "rollup -c rollup.config.babel.js -w",
+    "examples:build": "cd \"./examples\" && \"./node_modules/.bin/webpack\"",
+    "examples:watch": "cd \"./examples\" && \"./node_modules/.bin/webpack-dev-server\"",
+    "start": "(npm run watch & npm run examples:watch)",
+    "test": "jest --no-cache"
+  },
+  "keywords": [
+    "redux",
+    "react",
+    "notifications",
+    "library"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^22.4.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "classnames": "^2.2.5",
+    "css-loader": "^0.28.9",
+    "jest": "^22.4.0",
+    "node-sass": "^4.7.2",
+    "postcss-scss": "^1.0.3",
+    "react-test-renderer": "^16.2.0",
+    "rollup": "^0.56.2",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-commonjs": "^8.3.0",
+    "rollup-plugin-node-resolve": "^3.0.3",
+    "rollup-plugin-postcss": "^1.2.8",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-serve": "^0.4.2",
+    "rollup-watch": "^4.3.1",
+    "style-loader": "^0.20.2",
+    "url-loader": "^0.6.2"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "prop-types": "^15.6.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0"
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "author": "Ricardo Baquero <wola_ricky@hotmail.com> (https://github.com/RickyTB)"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RickyTB/redux-notification.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RickyTB/redux-notification/issues"
+  },
+  "homepage": "https://github.com/RickyTB/redux-notification#readme"
+}
