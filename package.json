@@ -56,7 +56,7 @@
     "example": "examples",
     "test": "test"
   },
-  "author": "Ricardo Baquero <wola_ricky@hotmail.com> (https://github.com/RickyTB)"
+  "author": "Ricardo Baquero <wola_ricky@hotmail.com> (https://github.com/RickyTB)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RickyTB/redux-notification.git"
