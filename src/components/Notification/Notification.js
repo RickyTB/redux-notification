@@ -19,14 +19,15 @@ class Notification extends Component {
 
     componentDidMount() {
         const frameTime = 1 / 30;
+        const reduction = this.state.progress / this.props.timeout;
+        const frame = reduction * frameTime;
         this.interval = setInterval(() => {
             this.setState(({progress}) => (
-                {progress: progress - (this.props.timeout * frameTime)}
+                {progress: progress - frame}
             ), () => {
-                if (this.state.progress <= 0) {
-                    clearInterval(this.interval);
-                    this.handleRemoval();
-                }
+                if (this.state.progress > 0) return;
+                clearInterval(this.interval);
+                this.handleRemoval();
             });
         }, frameTime * 1000);
     }

@@ -8,10 +8,6 @@ import * as actions from '../../store/actions';
 
 class Notifications extends Component {
 
-    componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
-    }
-
     render() {
         return (
             <div className={classes.Notifications}>

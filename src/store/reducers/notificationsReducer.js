@@ -5,13 +5,13 @@ const initialState = [];
 
 const reducer = (userReducer) => (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.ADD_NOTIFICATION: return createNotification(state, action);
+        case actionTypes.ADD_NOTIFICATION: return addNotification(state, action);
         case actionTypes.REMOVE_NOTIFICATION: return removeNotification(state, action);
         default: return userReducer ? userReducer(state, action) : state;
     }
 };
 
-const createNotification = (state, {text, displayType, timeout}) => [...state, {
+const addNotification = (state, {text, displayType, timeout}) => [...state, {
     id: genID(8),
     text,
     displayType,

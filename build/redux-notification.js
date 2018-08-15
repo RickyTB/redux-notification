@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-redux')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-redux'], factory) :
-	(factory((global.ReduxNotification = {}),global.React,global.ReactRedux));
-}(this, (function (exports,React,reactRedux) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react'), require('react-redux')) :
+	typeof define === 'function' && define.amd ? define(['react', 'react-redux'], factory) :
+	(global.ReduxNotification = factory(global.React,global.ReactRedux));
+}(this, (function (React,reactRedux) { 'use strict';
 
 var React__default = 'default' in React ? React['default'] : React;
 
@@ -126,9 +126,26 @@ var addNotificationFromAction = function addNotificationFromAction(state, _ref) 
     }, notification)]);
 };
 
+var createNotification = function createNotification(state, notification) {
+    return [].concat(toConsumableArray(state), [_extends({
+        id: genID(8)
+    }, notification)]);
+};
+
+
+var reducerFns = Object.freeze({
+	NOTIFICATIONS: NOTIFICATIONS,
+	addNotificationFromAction: addNotificationFromAction,
+	createNotification: createNotification
+});
+
 var getNotifications = function getNotifications(state) {
   return state[NOTIFICATIONS];
 };
+
+var selectors = Object.freeze({
+	getNotifications: getNotifications
+});
 
 var css$1 = ".Notification_Notification__tXNXt {\n  width: 24em;\n  margin-top: 0.6em;\n  position: relative;\n  overflow: hidden;\n  border-radius: 4px;\n  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.5); }\n  .Notification_Notification__tXNXt .Notification_Content__2iLOb {\n    padding: 0.6em; }\n  .Notification_Notification__tXNXt .Notification_ProgressBar__-O1TP {\n    height: 0.3em; }\n  .Notification_Notification__tXNXt button {\n    position: absolute;\n    top: 0;\n    right: 0;\n    padding: 0;\n    margin: 0.3em;\n    font-weight: normal;\n    border-radius: 0;\n    background-color: transparent;\n    border-color: transparent;\n    box-shadow: none;\n    transition: opacity 600ms ease;\n    opacity: 0; }\n  .Notification_Notification__tXNXt:hover button {\n    opacity: 1; }\n  .Notification_Notification__tXNXt.Notification_Default__2Z5LL {\n    background-color: #ff6d00; }\n    .Notification_Notification__tXNXt.Notification_Default__2Z5LL .Notification_ProgressBar__-O1TP {\n      background-color: #cc5700; }\n  .Notification_Notification__tXNXt.Notification_Success__1p6-X {\n    background-color: #28a745; }\n    .Notification_Notification__tXNXt.Notification_Success__1p6-X .Notification_Content__2iLOb {\n      color: #fff; }\n    .Notification_Notification__tXNXt.Notification_Success__1p6-X .Notification_ProgressBar__-O1TP {\n      background-color: #34ce57; }\n    .Notification_Notification__tXNXt.Notification_Success__1p6-X button {\n      color: #34ce57; }\n      .Notification_Notification__tXNXt.Notification_Success__1p6-X button:hover {\n        color: #5dd879; }\n";
 var classes$1 = { "Notification": "Notification_Notification__tXNXt", "Content": "Notification_Content__2iLOb", "ProgressBar": "Notification_ProgressBar__-O1TP", "Default": "Notification_Default__2Z5LL", "Success": "Notification_Success__1p6-X" };
@@ -170,15 +187,16 @@ var Notification = function (_Component) {
             var _this2 = this;
 
             var frameTime = 1 / 30;
+            var reduction = this.state.progress / this.props.timeout;
+            var frame = reduction * frameTime;
             this.interval = setInterval(function () {
                 _this2.setState(function (_ref2) {
                     var progress = _ref2.progress;
-                    return { progress: progress - _this2.props.timeout * frameTime };
+                    return { progress: progress - frame };
                 }, function () {
-                    if (_this2.state.progress <= 0) {
-                        clearInterval(_this2.interval);
-                        _this2.handleRemoval();
-                    }
+                    if (_this2.state.progress > 0) return;
+                    clearInterval(_this2.interval);
+                    _this2.handleRemoval();
                 });
             }, frameTime * 1000);
         }
@@ -218,11 +236,21 @@ Notification.defaultProps = {
 var ADD_NOTIFICATION = 'ADD_NOTIFICATION';
 var REMOVE_NOTIFICATION = 'REMOVE_NOTIFICATION';
 
-var addNotification = function addNotification(displayType, text) {
+var actionTypes = Object.freeze({
+	ADD_NOTIFICATION: ADD_NOTIFICATION,
+	REMOVE_NOTIFICATION: REMOVE_NOTIFICATION
+});
+
+var addNotification = function addNotification(_ref) {
+    var displayType = _ref.displayType,
+        text = _ref.text,
+        timeout = _ref.timeout;
+
     return {
         type: ADD_NOTIFICATION,
         text: text,
-        displayType: displayType
+        displayType: displayType,
+        timeout: timeout
     };
 };
 
@@ -233,6 +261,13 @@ var removeNotification = function removeNotification(id) {
     };
 };
 
+
+
+var actions = Object.freeze({
+	addNotification: addNotification,
+	removeNotification: removeNotification
+});
+
 var Notifications = function (_Component) {
     inherits(Notifications, _Component);
 
@@ -242,11 +277,6 @@ var Notifications = function (_Component) {
     }
 
     createClass(Notifications, [{
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            console.log(nextProps);
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
@@ -282,7 +312,7 @@ var reducer = function reducer(userReducer) {
 
         switch (action.type) {
             case ADD_NOTIFICATION:
-                return createNotification(state, action);
+                return addNotification$1(state, action);
             case REMOVE_NOTIFICATION:
                 return removeNotification$1(state, action);
             default:
@@ -291,7 +321,7 @@ var reducer = function reducer(userReducer) {
     };
 };
 
-var createNotification = function createNotification(state, _ref) {
+var addNotification$1 = function addNotification(state, _ref) {
     var text = _ref.text,
         displayType = _ref.displayType,
         timeout = _ref.timeout;
@@ -310,17 +340,9 @@ var removeNotification$1 = function removeNotification(state, _ref2) {
     });
 };
 
-exports.Notifications = Notifications$1;
-exports.notificationsReducer = reducer;
-exports.addNotification = addNotification;
-exports.removeNotification = removeNotification;
-exports.ADD_NOTIFICATION = ADD_NOTIFICATION;
-exports.REMOVE_NOTIFICATION = REMOVE_NOTIFICATION;
-exports.getNotifications = getNotifications;
-exports.NOTIFICATIONS = NOTIFICATIONS;
-exports.addNotificationFromAction = addNotificationFromAction;
+var index = _extends({ Notifications: Notifications$1 }, actions, actionTypes, { notificationsReducer: reducer }, selectors, reducerFns);
 
-Object.defineProperty(exports, '__esModule', { value: true });
+return index;
 
 })));
 //# sourceMappingURL=redux-notification.js.map

@@ -6,7 +6,7 @@ export const buttonPressed = () => {
         notification: {
             displayType: 'success',
             text: 'Button pressed :O',
-            timeout: 8
+            timeout: 3
         }
     }
 };
