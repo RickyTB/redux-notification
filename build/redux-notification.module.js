@@ -127,20 +127,9 @@ var createNotification = function createNotification(state, notification) {
     }, notification)]);
 };
 
-
-var reducerFns = Object.freeze({
-	NOTIFICATIONS: NOTIFICATIONS,
-	addNotificationFromAction: addNotificationFromAction,
-	createNotification: createNotification
-});
-
 var getNotifications = function getNotifications(state) {
   return state[NOTIFICATIONS];
 };
-
-var selectors = Object.freeze({
-	getNotifications: getNotifications
-});
 
 var css$1 = ".Notification_Notification__tXNXt {\n  width: 24em;\n  margin-top: 0.6em;\n  position: relative;\n  overflow: hidden;\n  border-radius: 4px;\n  box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.5); }\n  .Notification_Notification__tXNXt .Notification_Content__2iLOb {\n    padding: 0.6em; }\n  .Notification_Notification__tXNXt .Notification_ProgressBar__-O1TP {\n    height: 0.3em; }\n  .Notification_Notification__tXNXt button {\n    position: absolute;\n    top: 0;\n    right: 0;\n    padding: 0;\n    margin: 0.3em;\n    font-weight: normal;\n    border-radius: 0;\n    background-color: transparent;\n    border-color: transparent;\n    box-shadow: none;\n    transition: opacity 600ms ease;\n    opacity: 0; }\n  .Notification_Notification__tXNXt:hover button {\n    opacity: 1; }\n  .Notification_Notification__tXNXt.Notification_Default__2Z5LL {\n    background-color: #ff6d00; }\n    .Notification_Notification__tXNXt.Notification_Default__2Z5LL .Notification_ProgressBar__-O1TP {\n      background-color: #cc5700; }\n  .Notification_Notification__tXNXt.Notification_Success__1p6-X {\n    background-color: #28a745; }\n    .Notification_Notification__tXNXt.Notification_Success__1p6-X .Notification_Content__2iLOb {\n      color: #fff; }\n    .Notification_Notification__tXNXt.Notification_Success__1p6-X .Notification_ProgressBar__-O1TP {\n      background-color: #34ce57; }\n    .Notification_Notification__tXNXt.Notification_Success__1p6-X button {\n      color: #34ce57; }\n      .Notification_Notification__tXNXt.Notification_Success__1p6-X button:hover {\n        color: #5dd879; }\n";
 var classes$1 = { "Notification": "Notification_Notification__tXNXt", "Content": "Notification_Content__2iLOb", "ProgressBar": "Notification_ProgressBar__-O1TP", "Default": "Notification_Default__2Z5LL", "Success": "Notification_Success__1p6-X" };
@@ -231,11 +220,6 @@ Notification.defaultProps = {
 var ADD_NOTIFICATION = 'ADD_NOTIFICATION';
 var REMOVE_NOTIFICATION = 'REMOVE_NOTIFICATION';
 
-var actionTypes = Object.freeze({
-	ADD_NOTIFICATION: ADD_NOTIFICATION,
-	REMOVE_NOTIFICATION: REMOVE_NOTIFICATION
-});
-
 var addNotification = function addNotification(_ref) {
     var displayType = _ref.displayType,
         text = _ref.text,
@@ -255,13 +239,6 @@ var removeNotification = function removeNotification(id) {
         id: id
     };
 };
-
-
-
-var actions = Object.freeze({
-	addNotification: addNotification,
-	removeNotification: removeNotification
-});
 
 var Notifications = function (_Component) {
     inherits(Notifications, _Component);
@@ -335,6 +312,4 @@ var removeNotification$1 = function removeNotification(state, _ref2) {
     });
 };
 
-var index = _extends({ Notifications: Notifications$1 }, actions, actionTypes, { notificationsReducer: reducer }, selectors, reducerFns);
-
-export default index;
+export { Notifications$1 as Notifications, reducer as notificationsReducer, addNotification, removeNotification, ADD_NOTIFICATION, REMOVE_NOTIFICATION, getNotifications, NOTIFICATIONS, addNotificationFromAction, createNotification };

@@ -1,6 +1,6 @@
 {
   "name": "redux-notification",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A simple Redux notifications manager.",
   "main": "build/redux-notification.js",
   "module": "build/redux-notification.module.js",
@@ -44,7 +44,7 @@
     "url-loader": "^0.6.2"
   },
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-redux": "^5.0.7",
