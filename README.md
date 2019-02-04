@@ -1,5 +1,6 @@
-Redux Notification
-=========
+# Redux Notification
+
+[![NPM](https://img.shields.io/npm/v/redux-notification.svg)](https://www.npmjs.com/package/redux-notification) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 Ever wanted to notify users in response of an action? Then this library is for you!
 
@@ -44,3 +45,4 @@ See also the list of [contributors](https://github.com/RickyTB/redux-notificatio
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
