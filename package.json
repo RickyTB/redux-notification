@@ -1,6 +1,6 @@
 {
   "name": "redux-notification",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple Redux notifications manager.",
   "author": "Ricardo Baquero <wola_ricky@hotmail.com> (https://github.com/RickyTB)",
   "repository": {

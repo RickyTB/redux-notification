@@ -5,7 +5,9 @@ import classes from './Notification.scss';
 const styles = {
   'default': classes.Default,
   'success': classes.Success,
-  'error': classes.Error
+  'error': classes.Error,
+  'info': classes.Info,
+  'warning': classes.Warning
 };
 
 class Notification extends Component {

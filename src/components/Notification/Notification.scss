@@ -1,12 +1,27 @@
 @import "../../scss/variables";
 
 .Notification {
-  width: 24em;
-  margin-top: 0.6em;
   position: relative;
   overflow: hidden;
+  min-width: 16em;
+  max-width: 100%;
+  margin-top: 0.6em;
   border-radius: 4px;
   box-shadow: 2px 2px 6px 0 rgba(0, 0, 0, 0.5);
+
+  @include sm {
+    min-width: 20em;
+  }
+
+  @include md {
+    min-width: 24em;
+    max-width: 80%;
+  }
+
+  @include lg {
+    max-width: 60%;
+  }
+
   .Content {
     padding: 0.6em;
   }
@@ -75,6 +90,40 @@
       color: lighten($brand-danger, 10%);
       &:hover {
         color: lighten($brand-danger, 20%);
+      }
+    }
+  }
+
+  &.Info {
+    background-color: $brand-info;
+    .Content {
+      color: $gray-base;
+    }
+    .ProgressBar {
+      background-color: lighten($brand-info, 10%);
+    }
+
+    button {
+      color: lighten($brand-info, 10%);
+      &:hover {
+        color: lighten($brand-info, 20%);
+      }
+    }
+  }
+
+  &.Warning {
+    background-color: $brand-warning;
+    .Content {
+      color: $gray-base;
+    }
+    .ProgressBar {
+      background-color: lighten($brand-warning, 10%);
+    }
+
+    button {
+      color: lighten($brand-warning, 10%);
+      &:hover {
+        color: lighten($brand-warning, 20%);
       }
     }
   }
