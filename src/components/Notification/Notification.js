@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+import cx from 'classnames';
 
 import classes from './Notification.scss';
 
@@ -10,62 +11,43 @@ const styles = {
   'warning': classes.Warning
 };
 
-class Notification extends Component {
+const FRAME_TIME = 1 / 30;
 
-  static defaultProps = {
-    timeout: 10
-  };
+const Notification = ({displayType, timeout, text, id, remove}) => {
+  const [progress, setProgress] = useState(100);
 
-  state = {
-    progress: 100
-  };
+  const handleCloseButton = useCallback(() => setProgress(0), [setProgress]);
+  const handleRemoval = useCallback(() => setTimeout(() => remove(id), 800), [remove, id]);
 
-  componentDidMount() {
-    const frameTime = 1 / 30;
-    const reduction = this.state.progress / this.props.timeout;
-    const frame = reduction * frameTime;
-    this.interval = setInterval(() => {
-      this.setState(({progress}) => (
-        {progress: progress - frame}
-      ), () => {
-        if (this.state.progress > 0) return;
-        clearInterval(this.interval);
-        this.handleRemoval();
+  useEffect(() => {
+    const reduction = progress / timeout;
+    const frame = reduction * FRAME_TIME;
+    const interval = setInterval(() => {
+      setProgress(progress => progress - frame, () => {
+        if (progress > 0) return;
+        clearInterval(interval);
+        handleRemoval();
       });
-    }, frameTime * 1000);
-  }
+    }, FRAME_TIME * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-  handleCloseButton = () => {
-    this.setState({progress: 0});
-  };
-
-  handleRemoval = () => {
-    setTimeout(() => this.props.remove(this.props.id), 800);
-  };
-
-  render() {
-    return (
-      <div
-        className={[
-          classes.Notification,
-          styles[this.props.displayType] || styles.default,
-          'animated',
-          this.state.progress > 0 ? 'bounceInLeft' : 'bounceOutLeft'
-        ].join(' ')}>
-        <button type="button" className="btn" onClick={this.handleCloseButton}>
-          <i className="fa fa-times fa-fw"/>
-        </button>
-        <div className={classes.Content}>
-          {this.props.text}
-        </div>
-        <div style={{width: `${this.state.progress}%`}} className={classes.ProgressBar}/>
+  return (
+    <div
+      className={cx(classes.Notification, styles[displayType] || styles.default, 'animated', progress > 0 ? 'bounceInLeft' : 'bounceOutLeft')}>
+      <button type="button" className="btn" onClick={handleCloseButton}>
+        <i className="fa fa-times fa-fw"/>
+      </button>
+      <div className={classes.Content}>
+        {text}
       </div>
-    )
-  }
+      <div style={{width: `${progress}%`}} className={classes.ProgressBar}/>
+    </div>
+  );
+};
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-}
+Notification.defaultProps = {
+  timeout: 10
+};
 
 export default Notification;
