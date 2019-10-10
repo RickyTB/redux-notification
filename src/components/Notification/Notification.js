@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import cx from 'classnames';
 
 import classes from './Notification.scss';
@@ -15,6 +15,7 @@ const FRAME_TIME = 1 / 30;
 
 const Notification = ({displayType, timeout, text, id, remove}) => {
   const [progress, setProgress] = useState(100);
+  const intervalRef = useRef(null);
 
   const handleCloseButton = useCallback(() => setProgress(0), [setProgress]);
   const handleRemoval = useCallback(() => setTimeout(() => remove(id), 800), [remove, id]);
@@ -22,15 +23,17 @@ const Notification = ({displayType, timeout, text, id, remove}) => {
   useEffect(() => {
     const reduction = progress / timeout;
     const frame = reduction * FRAME_TIME;
-    const interval = setInterval(() => {
-      setProgress(progress => progress - frame, () => {
-        if (progress > 0) return;
-        clearInterval(interval);
-        handleRemoval();
-      });
+    intervalRef.current = setInterval(() => {
+      setProgress(progress => progress - frame);
     }, FRAME_TIME * 1000);
-    return () => clearInterval(interval);
+    return () => clearInterval(intervalRef.current);
   }, []);
+
+  useEffect(() => {
+    if (progress > 0) return;
+    clearInterval(intervalRef.current);
+    handleRemoval();
+  }, [progress]);
 
   return (
     <div

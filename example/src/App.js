@@ -5,7 +5,7 @@ import 'animate.css/animate.css';
 
 import * as buttonActions from './store/actions/buttons'
 
-const app = ({buttonPressed, importantAlert, longNotification}) => {
+const App = ({buttonPressed, importantAlert, longNotification}) => {
   return (
     <div>
       <button onClick={() => buttonPressed('default')}>Show default notification</button>
@@ -28,4 +28,4 @@ export default connect(null, {
   buttonPressed: buttonActions.buttonPressed,
   importantAlert: buttonActions.importantAlert,
   longNotification: buttonActions.longNotification,
-})(app)
+})(App);
